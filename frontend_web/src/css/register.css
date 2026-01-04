@@ -1,0 +1,125 @@
+.register-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FDFBF9;
+    padding: 20px;
+}
+
+.register-card {
+    background: white;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(93, 64, 55, 0.1);
+}
+
+.register-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.icon-badge {
+    background-color: #EFEBE9;
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+}
+
+.register-header h1 {
+    color: #5D4037;
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.register-header p {
+    color: #8D6E63;
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #3E2723;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-group input {
+    padding: 12px;
+    border: 1.5px solid #EFEBE9;
+    border-radius: 10px;
+    background-color: #FDFBF9;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #8D6E63;
+    background-color: white;
+}
+
+.register-btn {
+    background-color: #5D4037;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+
+.register-btn:hover {
+    background-color: #3E2723;
+    transform: translateY(-2px);
+}
+
+.error-message {
+    background-color: #FFEBEE;
+    color: #C62828;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.register-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9rem;
+}
+
+.register-footer a {
+    color: #5D4037;
+    text-decoration: none;
+    font-weight: 700;
+}

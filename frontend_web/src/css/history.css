@@ -1,0 +1,126 @@
+.history-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    margin: 0;
+    color: #5D4037;
+    font-size: 1.8rem;
+}
+
+.page-header p {
+    margin: 0;
+    color: #8D6E63;
+    font-size: 0.95rem;
+}
+
+.header-icon {
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(93, 64, 55, 0.1);
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.history-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background: white;
+    transition: transform 0.2s;
+}
+
+.history-card:hover {
+    transform: translateX(5px);
+}
+
+.record-book {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #3E2723;
+}
+
+.brown-icon {
+    color: #5D4037;
+}
+
+.record-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 0.85rem;
+    color: #757575;
+}
+
+.record-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.return-date {
+    color: #2E7D32;
+    font-weight: 500;
+}
+
+.status-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-pill.Returned {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+}
+
+.status-pill.Borrowed {
+    background-color: #FFF3E0;
+    color: #EF6C00;
+}
+
+.empty-history {
+    text-align: center;
+    padding: 50px;
+    color: #8D6E63;
+    background: white;
+    border-radius: 12px;
+}
+
+.loading-state {
+    text-align: center;
+    padding: 50px;
+    color: #5D4037;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .history-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .record-meta {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

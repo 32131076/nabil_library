@@ -1,0 +1,132 @@
+.add-user-container {
+    max-width: 550px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: #5D4037;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 25px;
+    transition: color 0.2s;
+}
+
+.back-btn:hover {
+    color: #8D6E63;
+}
+
+.form-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(93, 64, 55, 0.1);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.icon-circle {
+    width: 60px;
+    height: 60px;
+    background: #FDFBF9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+}
+
+.form-header h2 {
+    color: #5D4037;
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.form-header p {
+    color: #8D6E63;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.input-group {
+    margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #3E2723;
+    margin-left: 4px;
+}
+
+.input-group input, 
+.select-wrapper select {
+    padding: 14px;
+    border: 1.5px solid #EFEBE9;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    background-color: #FDFBF9;
+    transition: all 0.2s;
+}
+
+.input-group input:focus, 
+.select-wrapper select:focus {
+    outline: none;
+    border-color: #8D6E63;
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(141, 110, 99, 0.1);
+}
+
+.select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.select-icon {
+    position: absolute;
+    left: 14px;
+    color: #8D6E63;
+}
+
+.select-wrapper select {
+    width: 100%;
+    padding-left: 45px;
+    appearance: none;
+    cursor: pointer;
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: #5D4037;
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    margin-top: 15px;
+}
+
+.submit-btn:hover {
+    background-color: #3E2723;
+    transform: translateY(-2px);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}

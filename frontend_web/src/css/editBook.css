@@ -1,0 +1,114 @@
+.edit-book-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.edit-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.edit-header h2 {
+    color: #5D4037;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.back-link {
+    background: none;
+    border: none;
+    color: #8D6E63;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.edit-card {
+    background: white;
+    padding: 30px;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #3E2723;
+}
+
+.field input, .field select, .field textarea {
+    padding: 12px;
+    border: 1px solid #EFEBE9;
+    border-radius: 8px;
+    background: #FDFBF9;
+    font-family: inherit;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+}
+
+.button-group {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-save {
+    background: #5D4037;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-save:hover {
+    background: #3E2723;
+    transform: translateY(-2px);
+}
+
+.loader {
+    text-align: center;
+    padding: 50px;
+    color: #5D4037;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+    .full-width {
+        grid-column: span 1;
+    }
+}
