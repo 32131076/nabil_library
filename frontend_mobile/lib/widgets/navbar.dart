@@ -5,7 +5,12 @@ class Navbar extends StatelessWidget {
   final Function(int) onTap;
   final String role;
 
-  const Navbar({super.key, required this.index, required this.onTap, required this.role});
+  const Navbar({
+    super.key,
+    required this.index,
+    required this.onTap,
+    required this.role,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +24,20 @@ class Navbar extends StatelessWidget {
       items: [
         const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
         const BottomNavigationBarItem(icon: Icon(Icons.book), label: "Books"),
-        const BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: "My Borrow"),
-        if (isStaff) const BottomNavigationBarItem(icon: Icon(Icons.add_box), label: "Add Book"),
-        if (role == 'admin') const BottomNavigationBarItem(icon: Icon(Icons.person_add), label: "Add User"),
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.bookmark),
+          label: "My Borrow",
+        ),
+        if (isStaff)
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.add_box),
+            label: "Add Book",
+          ),
+        if (role == 'admin')
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.person_add),
+            label: "Add User",
+          ),
       ],
     );
   }

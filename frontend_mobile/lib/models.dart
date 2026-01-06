@@ -2,10 +2,10 @@ class UserModel {
   final String id;
   final String username;
   final String fullname;
-  final String email; // NEW
-  final String phoneNumber; // NEW
-  final String address; // NEW
-  final String gender; // NEW
+  final String email;
+  final String phoneNumber;
+  final String address;
+  final String gender;
   final String role;
   final int borrowedCount;
 

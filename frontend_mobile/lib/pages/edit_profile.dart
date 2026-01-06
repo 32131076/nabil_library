@@ -11,7 +11,7 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  final _formKey = GlobalKey<FormState>(); // Added for validation
+  final _formKey = GlobalKey<FormState>();
   late TextEditingController f, e, p, a;
   late String g;
   bool _loading = false;
@@ -27,10 +27,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void _saveProfile() async {
-    // Trigger validation
     if (_formKey.currentState!.validate()) {
       setState(() => _loading = true);
-      
+
       await ApiService.updateUser(widget.user.id, {
         "fullname": f.text.trim(),
         "email": e.text.trim(),
@@ -41,11 +40,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       setState(() => _loading = false);
       if (!mounted) return;
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Profile updated successfully!")),
       );
-      Navigator.pop(context, true); 
+      Navigator.pop(context, true);
     }
   }
 
@@ -56,22 +55,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
-          key: _formKey, // Wrap in Form
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
                 controller: f,
-                decoration: const InputDecoration(labelText: "Full Name", border: OutlineInputBorder()),
+                decoration: const InputDecoration(
+                  labelText: "Full Name",
+                  border: OutlineInputBorder(),
+                ),
                 validator: (v) => v!.isEmpty ? "Enter your full name" : null,
               ),
               const SizedBox(height: 15),
               TextFormField(
                 controller: e,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(labelText: "Email", border: OutlineInputBorder()),
+                decoration: const InputDecoration(
+                  labelText: "Email",
+                  border: OutlineInputBorder(),
+                ),
                 validator: (v) {
                   if (v!.isEmpty) return "Enter your email";
-                  if (!v.contains("@") || !v.contains(".")) return "Enter a valid email address";
+                  if (!v.contains("@") || !v.contains("."))
+                    return "Enter a valid email address";
                   return null;
                 },
               ),
@@ -79,30 +85,47 @@ class _EditProfilePageState extends State<EditProfilePage> {
               TextFormField(
                 controller: p,
                 keyboardType: TextInputType.phone,
-                decoration: const InputDecoration(labelText: "Phone Number", border: OutlineInputBorder()),
-                validator: (v) => v!.length < 10 ? "Enter a valid phone number" : null,
+                decoration: const InputDecoration(
+                  labelText: "Phone Number",
+                  border: OutlineInputBorder(),
+                ),
+                validator: (v) =>
+                    v!.length < 10 ? "Enter a valid phone number" : null,
               ),
               const SizedBox(height: 15),
               TextFormField(
                 controller: a,
-                decoration: const InputDecoration(labelText: "Address", border: OutlineInputBorder()),
+                decoration: const InputDecoration(
+                  labelText: "Address",
+                  border: OutlineInputBorder(),
+                ),
                 validator: (v) => v!.isEmpty ? "Address cannot be empty" : null,
               ),
               const SizedBox(height: 15),
               DropdownButtonFormField<String>(
                 initialValue: g,
-                decoration: const InputDecoration(labelText: "Gender", border: OutlineInputBorder()),
-                items: ["Male", "Female", "Other"].map((val) => DropdownMenuItem(value: val, child: Text(val))).toList(),
+                decoration: const InputDecoration(
+                  labelText: "Gender",
+                  border: OutlineInputBorder(),
+                ),
+                items: ["Male", "Female", "Other"]
+                    .map(
+                      (val) => DropdownMenuItem(value: val, child: Text(val)),
+                    )
+                    .toList(),
                 onChanged: (v) => setState(() => g = v!),
               ),
               const SizedBox(height: 30),
-              _loading 
-                ? const CircularProgressIndicator() 
-                : SizedBox(
-                    width: double.infinity, 
-                    height: 50, 
-                    child: ElevatedButton(onPressed: _saveProfile, child: const Text("SAVE CHANGES")),
-                  ),
+              _loading
+                  ? const CircularProgressIndicator()
+                  : SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: _saveProfile,
+                        child: const Text("SAVE CHANGES"),
+                      ),
+                    ),
             ],
           ),
         ),

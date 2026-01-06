@@ -26,9 +26,9 @@ class _LoginPageState extends State<LoginPage> {
         MaterialPageRoute(builder: (c) => HomePage(user: user)),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Invalid Credentials")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Invalid Credentials")));
     }
   }
 
@@ -42,20 +42,42 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             const Icon(Icons.library_books, size: 80, color: Colors.brown),
             const SizedBox(height: 20),
-            const Text("Aziz Library", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+            const Text(
+              "Aziz Library",
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 30),
-            TextField(controller: u, decoration: const InputDecoration(labelText: "Username", border: OutlineInputBorder())),
+            TextField(
+              controller: u,
+              decoration: const InputDecoration(
+                labelText: "Username",
+                border: OutlineInputBorder(),
+              ),
+            ),
             const SizedBox(height: 15),
-            TextField(controller: p, obscureText: true, decoration: const InputDecoration(labelText: "Password", border: OutlineInputBorder())),
+            TextField(
+              controller: p,
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: "Password",
+                border: OutlineInputBorder(),
+              ),
+            ),
             const SizedBox(height: 20),
-            _loading 
-              ? const CircularProgressIndicator() 
-              : SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(onPressed: _handleLogin, child: const Text("LOGIN")),
-                ),
-            TextButton(onPressed: () => Navigator.pushNamed(context, '/register'), child: const Text("Create a new account"))
+            _loading
+                ? const CircularProgressIndicator()
+                : SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: _handleLogin,
+                      child: const Text("LOGIN"),
+                    ),
+                  ),
+            TextButton(
+              onPressed: () => Navigator.pushNamed(context, '/register'),
+              child: const Text("Create a new account"),
+            ),
           ],
         ),
       ),

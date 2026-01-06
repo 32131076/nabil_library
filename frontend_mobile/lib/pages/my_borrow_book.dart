@@ -27,7 +27,6 @@ class _MyBorrowBookPageState extends State<MyBorrowBookPage> {
     _loadBooks();
   }
 
-  // Helper to load or reload the books from server
   void _loadBooks() {
     setState(() {
       _borrowedBooksFuture = ApiService.getMyBorrowedBooks(widget.userId);
@@ -47,13 +46,15 @@ class _MyBorrowBookPageState extends State<MyBorrowBookPage> {
             ),
           );
         }
-        
+
         if (!snap.hasData || snap.data!.isEmpty) {
           return const Center(
             child: Padding(
               padding: EdgeInsets.all(40.0),
-              child: Text("You have no active borrowed books.", 
-                style: TextStyle(color: Colors.grey)),
+              child: Text(
+                "You have no active borrowed books.",
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
           );
         }
@@ -70,7 +71,10 @@ class _MyBorrowBookPageState extends State<MyBorrowBookPage> {
               elevation: 2,
               child: ListTile(
                 leading: const Icon(Icons.auto_stories, color: Colors.brown),
-                title: Text(b.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                title: Text(
+                  b.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 subtitle: Text("By ${b.author}"),
                 trailing: widget.isReadOnly
                     ? null
@@ -80,21 +84,19 @@ class _MyBorrowBookPageState extends State<MyBorrowBookPage> {
                           foregroundColor: Colors.white,
                         ),
                         onPressed: () async {
-                          // 1. Show immediate feedback
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Processing return..."), duration: Duration(seconds: 1)),
+                            const SnackBar(
+                              content: Text("Processing return..."),
+                              duration: Duration(seconds: 1),
+                            ),
                           );
 
-                          // 2. Await the API call to finish on the server
                           await ApiService.returnBook(b.id, widget.userId);
-                          
-                          // 3. Check if the user is still on this screen before updating
+
                           if (!mounted) return;
-                          
-                          // 4. Trigger the global update (Home stats)
+
                           if (widget.onUpdate != null) widget.onUpdate!();
-                          
-                          // 5. Refresh local list (this removes the book from UI)
+
                           _loadBooks();
 
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();

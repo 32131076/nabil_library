@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage> {
     currentUser = widget.user;
   }
 
-  // Refreshes user data from the API
   Future<void> refreshUser() async {
     final updated = await ApiService.getUserData(currentUser.id);
     if (updated != null) {
@@ -35,22 +34,22 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // Logout Dialog Logic
   void _showLogoutDialog() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Logout"),
-        content: const Text("Are you sure you want to log out of your account?"),
+        content: const Text(
+          "Are you sure you want to log out of your account?",
+        ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context), // Stay on account
+            onPressed: () => Navigator.pop(context),
             child: const Text("CANCEL"),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () {
-              // Navigate to login and remove all previous routes
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -67,7 +66,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
-      // Index 0: Dashboard
       RefreshIndicator(
         onRefresh: refreshUser,
         child: SingleChildScrollView(
@@ -84,8 +82,14 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Icon(Icons.auto_awesome, size: 50, color: Colors.brown),
                       SizedBox(height: 10),
-                      Text("Welcome to Aziz Library", style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text("Manage your books in the 'My Borrow' tab", textAlign: TextAlign.center),
+                      Text(
+                        "Welcome to Aziz Library",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Manage your books in the 'My Borrow' tab",
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                 ),
@@ -94,7 +98,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      BookPage(userRole: currentUser.role, userId: currentUser.id, onUpdate: refreshUser),
+      BookPage(
+        userRole: currentUser.role,
+        userId: currentUser.id,
+        onUpdate: refreshUser,
+      ),
       MyBorrowBookPage(userId: currentUser.id, onUpdate: refreshUser),
       const AddBookPage(),
       const AddUserPage(),
@@ -104,7 +112,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.brown,
         elevation: 0,
-        title: const Text("Library Dashboard", style: TextStyle(color: Colors.white, fontSize: 18)),
+        title: const Text(
+          "Library Dashboard",
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.white),
@@ -130,7 +141,6 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.all(25),
       decoration: const BoxDecoration(
         color: Colors.brown,
-        // FIX: Corrected from Radius.only to BorderRadius.only
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(50)),
       ),
       child: Row(
@@ -139,8 +149,8 @@ class _HomePageState extends State<HomePage> {
             radius: 35,
             backgroundColor: Colors.white24,
             child: Text(
-              currentUser.fullname.isNotEmpty ? currentUser.fullname[0] : "?", 
-              style: const TextStyle(color: Colors.white, fontSize: 24)
+              currentUser.fullname.isNotEmpty ? currentUser.fullname[0] : "?",
+              style: const TextStyle(color: Colors.white, fontSize: 24),
             ),
           ),
           const SizedBox(width: 20),
@@ -150,8 +160,12 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const Text("Hello,", style: TextStyle(color: Colors.white70)),
                 Text(
-                  currentUser.fullname, 
-                  style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)
+                  currentUser.fullname,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -159,10 +173,12 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.edit, color: Colors.white),
             onPressed: () => Navigator.push(
-              context, 
-              MaterialPageRoute(builder: (c) => EditProfilePage(user: currentUser))
+              context,
+              MaterialPageRoute(
+                builder: (c) => EditProfilePage(user: currentUser),
+              ),
             ).then((_) => refreshUser()),
-          )
+          ),
         ],
       ),
     );
@@ -173,13 +189,21 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.all(20),
       child: Row(
         children: [
-          Expanded(child: _statCard("Borrowed", currentUser.borrowedCount.toString(), Icons.book)),
+          Expanded(
+            child: _statCard(
+              "Borrowed",
+              currentUser.borrowedCount.toString(),
+              Icons.book,
+            ),
+          ),
           const SizedBox(width: 15),
           Expanded(
             child: GestureDetector(
               onTap: () => Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (c) => HistoryPage(userId: currentUser.id))
+                context,
+                MaterialPageRoute(
+                  builder: (c) => HistoryPage(userId: currentUser.id),
+                ),
               ),
               child: _statCard("History", "View All", Icons.history),
             ),
@@ -199,8 +223,14 @@ class _HomePageState extends State<HomePage> {
           children: [
             Icon(icon, color: Colors.brown),
             const SizedBox(height: 10),
-            Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+            Text(
+              value,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              label,
+              style: const TextStyle(color: Colors.grey, fontSize: 12),
+            ),
           ],
         ),
       ),

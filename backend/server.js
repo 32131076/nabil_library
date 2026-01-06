@@ -1,52 +1,46 @@
-require('dotenv').config(); 
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const path = require('path'); 
+const path = require('path');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// Use Environment Variable for MongoDB
-const mongoURI = process.env.MONGODB_URI;
-mongoose.connect(mongoURI)
-    .then(() => console.log("Connected to MongoDB successfully"))
-    .catch(err => console.error("MongoDB connection error:", err));
+// 1. Connection
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(err => console.error("Connection error:", err));
 
-// --- MODELS ---
+// 2. Models
 const User = mongoose.model('User', new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    fullname: String, 
-    email: { type: String, default: "" },
-    phoneNumber: { type: String, default: "" }, 
-    address: { type: String, default: "" },
-    gender: { type: String, default: "" }, 
-    role: { type: String, default: 'user' },
-    borrowedCount: { type: Number, default: 0 }
+    fullname: String,
+    role: { type: String, default: 'user' }
 }));
 
 const Book = mongoose.model('Book', new mongoose.Schema({
-    title: String, 
-    author: String, 
+    title: String,
+    author: String,
+    category: String,
     description: String,
-    category: { type: String, default: "General" },
     isAvailable: { type: Boolean, default: true },
     borrowerId: { type: String, default: null }
 }));
 
 const Borrow = mongoose.model('Borrow', new mongoose.Schema({
-    userId: String, 
-    bookId: String, 
-    title: String,
+    userId: String,
+    bookId: String,
+    bookTitle: String, // Added to match your history.js needs
     borrowDate: { type: Date, default: Date.now },
-    returnDate: Date, 
+    returnDate: Date,
     status: { type: String, default: 'active' }
 }));
 
-// --- API ROUTES ---
+// 3. API Routes
 app.post('/api/register', async (req, res) => {
     try {
         const hashed = await bcrypt.hash(req.body.password, 10);
@@ -59,22 +53,68 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     if (user && await bcrypt.compare(req.body.password, user.password)) {
-        res.json({ ok: true, user });
+        res.json(user);
     } else res.status(401).send("Invalid credentials");
 });
 
+// User Management (For EditProfile.js)
+app.get('/api/users/:id', async (req, res) => res.json(await User.findById(req.params.id)));
+app.put('/api/users/:id', async (req, res) => {
+    if (req.body.password) req.body.password = await bcrypt.hash(req.body.password, 10);
+    const updated = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updated);
+});
+
+// Book Management
 app.get('/api/books', async (req, res) => res.json(await Book.find()));
 app.post('/api/books', async (req, res) => res.json(await new Book(req.body).save()));
 app.put('/api/books/:id', async (req, res) => res.json(await Book.findByIdAndUpdate(req.params.id, req.body)));
 app.delete('/api/books/:id', async (req, res) => res.json(await Book.findByIdAndDelete(req.params.id)));
 
-// --- STATIC HOSTING CONFIGURATION ---
+// Transaction Logic (For MyBorrowBook.js and Home.js)
+app.post('/api/borrow', async (req, res) => {
+    const { bookId, userId } = req.body;
+    const book = await Book.findById(bookId);
+    if (!book.isAvailable) return res.status(400).send("Already borrowed");
+    
+    await Book.findByIdAndUpdate(bookId, { isAvailable: false, borrowerId: userId });
+    await new Borrow({ userId, bookId, bookTitle: book.title }).save();
+    res.json({ ok: true });
+});
+
+app.post('/api/return', async (req, res) => {
+    const { bookId, userId } = req.body;
+    await Book.findByIdAndUpdate(bookId, { isAvailable: true, borrowerId: null });
+    await Borrow.findOneAndUpdate({ bookId, userId, status: 'active' }, { status: 'returned', returnDate: Date.now() });
+    res.json({ ok: true });
+});
+
+app.get('/api/my-books/:userId', async (req, res) => {
+    res.json(await Book.find({ borrowerId: req.params.userId }));
+});
+
+app.get('/api/history/:userId', async (req, res) => {
+    res.json(await Borrow.find({ userId: req.params.userId }));
+});
+
+// 4. Static Files & Crash Fix
 app.use('/mobile', express.static(path.join(__dirname, '../frontend_mobile/build/web')));
 app.use(express.static(path.join(__dirname, '../frontend_web/build')));
 
-app.get('*', (req, res) => {
+// FIX: Named wildcard to stop the PathError crash
+app.get(/(.*)/, (req, res) => {
     if (!req.path.startsWith('/api')) {
         res.sendFile(path.join(__dirname, '../frontend_web/build', 'index.html'));
+    }
+});
+
+app.get('/api/users', async (req, res) => {
+    try {
+        // Find all users but don't send their passwords for security
+        const users = await User.find({}, '-password'); 
+        res.json(users);
+    } catch (e) {
+        res.status(500).send(e.message);
     }
 });
 

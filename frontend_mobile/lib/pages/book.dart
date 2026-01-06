@@ -29,7 +29,6 @@ class _BookPageState extends State<BookPage> {
 
     return Column(
       children: [
-        // --- SEARCH SECTION ---
         Padding(
           padding: const EdgeInsets.all(12),
           child: TextField(
@@ -48,7 +47,6 @@ class _BookPageState extends State<BookPage> {
           ),
         ),
 
-        // --- BOOKS LIST ---
         Expanded(
           child: FutureBuilder<List<BookModel>>(
             future: ApiService.getBooks(),
@@ -57,13 +55,17 @@ class _BookPageState extends State<BookPage> {
                 return const Center(child: CircularProgressIndicator());
               }
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(child: Text("No books available in the library."));
+                return const Center(
+                  child: Text("No books available in the library."),
+                );
               }
 
               final filtered = snapshot.data!
-                  .where((b) =>
-                      b.title.toLowerCase().contains(_search) ||
-                      b.author.toLowerCase().contains(_search))
+                  .where(
+                    (b) =>
+                        b.title.toLowerCase().contains(_search) ||
+                        b.author.toLowerCase().contains(_search),
+                  )
                   .toList();
 
               return ListView.builder(
@@ -74,10 +76,14 @@ class _BookPageState extends State<BookPage> {
                   return Card(
                     elevation: 2,
                     margin: const EdgeInsets.symmetric(vertical: 6),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      // TAP TO SEE DETAILS
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -86,15 +92,17 @@ class _BookPageState extends State<BookPage> {
                               book: b,
                               userId: widget.userId,
                               onUpdate: () {
-                                widget.onUpdate(); // Update Home Stats
-                                setState(() {});    // Refresh this list
+                                widget.onUpdate();
+                                setState(() {});
                               },
                             ),
                           ),
                         );
                       },
                       leading: CircleAvatar(
-                        backgroundColor: b.isAvailable ? Colors.green.shade50 : Colors.red.shade50,
+                        backgroundColor: b.isAvailable
+                            ? Colors.green.shade50
+                            : Colors.red.shade50,
                         child: Icon(
                           Icons.menu_book,
                           color: b.isAvailable ? Colors.green : Colors.red,
@@ -102,7 +110,10 @@ class _BookPageState extends State<BookPage> {
                       ),
                       title: Text(
                         b.title,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,39 +133,62 @@ class _BookPageState extends State<BookPage> {
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          // STAFF CONTROLS (Edit/Delete)
                           if (isStaff) ...[
                             IconButton(
-                              icon: const Icon(Icons.edit, color: Colors.blue, size: 20),
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.blue,
+                                size: 20,
+                              ),
                               onPressed: () => Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => EditBookPage(book: b)),
+                                MaterialPageRoute(
+                                  builder: (context) => EditBookPage(book: b),
+                                ),
                               ).then((_) => setState(() {})),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red, size: 20),
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                                size: 20,
+                              ),
                               onPressed: () => _showDeleteDialog(b.id),
                             ),
                           ],
-                          
-                          // BORROW BUTTON (For Users/Staff)
+
                           if (b.isAvailable)
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.brown,
-                                padding: const EdgeInsets.symmetric(horizontal: 12),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
                               onPressed: () async {
-                                await ApiService.borrowBook(b.id, widget.userId);
+                                await ApiService.borrowBook(
+                                  b.id,
+                                  widget.userId,
+                                );
                                 widget.onUpdate();
                                 setState(() {});
                                 if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text("Borrowed ${b.title}")),
+                                  SnackBar(
+                                    content: Text("Borrowed ${b.title}"),
+                                  ),
                                 );
                               },
-                              child: const Text("Borrow", style: TextStyle(color: Colors.white, fontSize: 12)),
+                              child: const Text(
+                                "Borrow",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
                             ),
                         ],
                       ),
@@ -169,15 +203,19 @@ class _BookPageState extends State<BookPage> {
     );
   }
 
-  // --- DELETE LOGIC ---
   void _showDeleteDialog(String bookId) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Delete Book"),
-        content: const Text("This action cannot be undone. Do you want to continue?"),
+        content: const Text(
+          "This action cannot be undone. Do you want to continue?",
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () async {

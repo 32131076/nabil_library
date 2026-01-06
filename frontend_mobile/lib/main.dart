@@ -20,23 +20,17 @@ class AzizLibraryApp extends StatelessWidget {
         primarySwatch: Colors.brown,
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.grey.shade100,
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-        ),
+        appBarTheme: const AppBarTheme(centerTitle: true),
       ),
-      // Initial route is Login
       initialRoute: '/',
       routes: {
         '/': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
       },
-      // Handle navigation to Home with User data
       onGenerateRoute: (settings) {
         if (settings.name == '/home') {
           final user = settings.arguments as UserModel;
-          return MaterialPageRoute(
-            builder: (context) => HomePage(user: user),
-          );
+          return MaterialPageRoute(builder: (context) => HomePage(user: user));
         }
         return null;
       },

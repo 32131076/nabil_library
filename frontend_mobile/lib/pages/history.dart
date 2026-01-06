@@ -16,7 +16,9 @@ class HistoryPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text("No history found. Start reading!"));
+            return const Center(
+              child: Text("No history found. Start reading!"),
+            );
           }
 
           return ListView.builder(
@@ -33,10 +35,16 @@ class HistoryPage extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: ListTile(
                   leading: const Icon(Icons.history_edu, color: Colors.brown),
-                  title: Text(item['title'] ?? "Unknown Title", 
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                  title: Text(
+                    item['title'] ?? "Unknown Title",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   subtitle: Text("Status: Returned on $dateDisplay"),
-                  trailing: const Icon(Icons.check_circle, color: Colors.green, size: 20),
+                  trailing: const Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                    size: 20,
+                  ),
                 ),
               );
             },

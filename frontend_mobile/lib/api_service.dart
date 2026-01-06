@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'models.dart';
 
 class ApiService {
-  // Use 10.0.2.2 for Android Emulator, or your local IP (e.g. 192.168.1.5) for physical devices
   static const String baseUrl = "http://localhost:5000/api";
 
   static Future<Map<String, dynamic>?> login(String u, String p) async {
@@ -36,12 +35,18 @@ class ApiService {
   }
 
   static Future<void> addBook(Map<String, dynamic> data) async =>
-      await http.post(Uri.parse('$baseUrl/books'),
-          headers: {'Content-Type': 'application/json'}, body: jsonEncode(data));
+      await http.post(
+        Uri.parse('$baseUrl/books'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(data),
+      );
 
   static Future<void> updateBook(String id, Map<String, dynamic> data) async =>
-      await http.put(Uri.parse('$baseUrl/books/$id'),
-          headers: {'Content-Type': 'application/json'}, body: jsonEncode(data));
+      await http.put(
+        Uri.parse('$baseUrl/books/$id'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(data),
+      );
 
   static Future<void> deleteBook(String id) async =>
       await http.delete(Uri.parse('$baseUrl/books/$id'));
