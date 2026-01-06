@@ -76,8 +76,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
                 validator: (v) {
                   if (v!.isEmpty) return "Enter your email";
-                  if (!v.contains("@") || !v.contains("."))
+                  if (!v.contains("@") || !v.contains(".")) {
                     return "Enter a valid email address";
+                  }
                   return null;
                 },
               ),
