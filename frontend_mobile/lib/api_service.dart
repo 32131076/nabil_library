@@ -1,9 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:html' as html;
 import 'models.dart';
 
 class ApiService {
-  static const String baseUrl = "http://localhost:5000/api";
+  static String get baseUrl {
+    final String origin = html.window.location.origin;
+    if (origin.contains('localhost')) {
+      return "http://localhost:5000/api";
+    }
+    return "$origin/api";
+  }
 
   static Future<Map<String, dynamic>?> login(String u, String p) async {
     final r = await http.post(
