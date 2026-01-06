@@ -19,6 +19,10 @@ const User = mongoose.model('User', new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     fullname: String,
+    email: String,
+    phoneNumber: String,
+    address: String,
+    gender: String,
     role: { type: String, default: 'user' }
 }));
 
@@ -34,7 +38,7 @@ const Book = mongoose.model('Book', new mongoose.Schema({
 const Borrow = mongoose.model('Borrow', new mongoose.Schema({
     userId: String,
     bookId: String,
-    bookTitle: String, // Added to match your history.js needs
+    bookTitle: String,
     borrowDate: { type: Date, default: Date.now },
     returnDate: Date,
     status: { type: String, default: 'active' }
@@ -97,17 +101,6 @@ app.get('/api/history/:userId', async (req, res) => {
     res.json(await Borrow.find({ userId: req.params.userId }));
 });
 
-// 4. Static Files & Crash Fix
-app.use('/mobile', express.static(path.join(__dirname, '../frontend_mobile/build/web')));
-app.use(express.static(path.join(__dirname, '../frontend_web/build')));
-
-// FIX: Named wildcard to stop the PathError crash
-app.get(/(.*)/, (req, res) => {
-    if (!req.path.startsWith('/api')) {
-        res.sendFile(path.join(__dirname, '../frontend_web/build', 'index.html'));
-    }
-});
-
 app.get('/api/users', async (req, res) => {
     try {
         // Find all users but don't send their passwords for security
@@ -118,5 +111,16 @@ app.get('/api/users', async (req, res) => {
     }
 });
 
+// 4. Static Files & Crash Fix
+app.use('/mobile', express.static(path.join(__dirname, '../frontend_mobile/build/web')));
+app.use(express.static(path.join(__dirname, '../frontend_web/build')));
+
+// FIX: Named wildcard to stop the PathError crash
+app.get(/(.*)/, (req, res) => {
+    if (!req.path.startsWith('/api')) {
+        res.sendFile(path.join(__dirname, '../frontend_web/build', 'index.html'));
+    }
+});
+// 5. Start Server 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
