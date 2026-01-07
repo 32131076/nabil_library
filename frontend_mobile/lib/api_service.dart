@@ -4,13 +4,7 @@ import 'dart:html' as html;
 import 'models.dart';
 
 class ApiService {
-  static String get baseUrl {
-    final String origin = html.window.location.origin;
-    if (origin.contains('localhost')) {
-      return "http://localhost:5000/api";
-    }
-    return "$origin/api";
-  }
+  static String get baseUrl => "https://nabil-library-2.onrender.com/api";
 
   static Future<Map<String, dynamic>?> login(String u, String p) async {
     final r = await http.post(
