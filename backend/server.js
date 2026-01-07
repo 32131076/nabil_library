@@ -80,7 +80,7 @@ app.post('/api/borrow', async (req, res) => {
     const { bookId, userId } = req.body;
     const book = await Book.findById(bookId);
     if (!book.isAvailable) return res.status(400).send("Already borrowed");
-    
+
     await Book.findByIdAndUpdate(bookId, { isAvailable: false, borrowerId: userId });
     await new Borrow({ userId, bookId, bookTitle: book.title }).save();
     res.json({ ok: true });
@@ -104,7 +104,7 @@ app.get('/api/history/:userId', async (req, res) => {
 app.get('/api/users', async (req, res) => {
     try {
         // Find all users but don't send their passwords for security
-        const users = await User.find({}, '-password'); 
+        const users = await User.find({}, '-password');
         res.json(users);
     } catch (e) {
         res.status(500).send(e.message);
