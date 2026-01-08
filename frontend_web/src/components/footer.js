@@ -8,7 +8,7 @@ const Footer = () => {
         <footer className="footer-container">
             <div className="footer-content">
                 <div className="footer-section">
-                    <h3>Aziz Library</h3>
+                    <h3>Nabil Library</h3>
                     <p>Empowering students through knowledge and easy access to digital resources.</p>
                 </div>
                 
@@ -29,7 +29,7 @@ const Footer = () => {
             </div>
             
             <div className="footer-bottom">
-                <p>&copy; {currentYear} Aziz Library System. All Rights Reserved.</p>
+                <p>&copy; {currentYear} Nabil Library System. All Rights Reserved.</p>
             </div>
         </footer>
     );

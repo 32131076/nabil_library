@@ -33,7 +33,7 @@ const Login = ({ setUser }) => {
                     <div className="brand-logo">
                         <LogIn size={32} color="#FDFBF9" />
                     </div>
-                    <h1>Aziz Library</h1>
+                    <h1>Nabil Library</h1>
                 </div>
 
                 <form onSubmit={handleLogin} className="login-form">

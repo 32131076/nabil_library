@@ -36,7 +36,7 @@ const Register = () => {
                     <div className="icon-badge">
                         <UserPlus size={28} color="#5D4037" />
                     </div>
-                    <h1>Join Aziz Library</h1>
+                    <h1>Join Nabil Library</h1>
                     <p>Create your student account to start borrowing.</p>
                 </div>
 

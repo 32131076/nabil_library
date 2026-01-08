@@ -13,7 +13,7 @@ const Navbar = ({ user, setUser }) => {
         <header className="header">
             <div className="header-container">
                 <div className="logo">
-                    <h1>Aziz Library</h1>
+                    <h1>Nabil Library</h1>
                 </div>
 
                 <nav className="nav">
