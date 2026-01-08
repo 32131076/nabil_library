@@ -57,7 +57,7 @@ const Home = ({ user }) => {
                     <div className="stat-item glass-card">
                         <BookOpen color="#5D4037" size={24} />
                         <div>
-                            <span className="stat-value">{userData.borrowedCount || 0} / 5</span>
+                            <span className="stat-value">{userData.borrowedCount || 0}</span>
                             <span className="stat-label">Borrowed Books</span>
                         </div>
                     </div>
